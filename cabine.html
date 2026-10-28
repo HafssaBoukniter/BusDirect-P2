@@ -44,7 +44,7 @@
 
     <!--main-->
     <main class="max-w-7xl mx-auto px-6 py-7">
-        <section id="trip-information" class="bg-teal-50 border border-teal-100 rounded-xl p-6 mb-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-center">
+        <section id="trip-information" class="bg-teal-50 border border-teal-100 rounded-xl p-5 mb-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 items-center">
             <div class="">
                 <h2 id="trajet-titre" class="text-3xl font-bold text-teal-900">
                     Safi <span class="text-teal-600">→</span> Marrakech
@@ -114,17 +114,17 @@
 
                         <div id="plan-sieges" class="grid grid-cols-5 grid-cols[1fr_1fr_1rem_1fr_1fr] max-sm:grid-cols-2 max-sm:grid-cols[1fr_1fr] gap-4 p-2">
 
-                            <button type="button" data-seat="1" class="siege VIP flex flex-col justify-center">
+                            <button type="button" data-seat="1" class="siege vip flex flex-col justify-center">
                                 1 <span class="text-xs">VIP</span>
                             </button>
-                            <button type="button" data-seat="2" class="siege VIP flex flex-col justify-center">
+                            <button type="button" data-seat="2" class="siege vip flex flex-col justify-center">
                                 2 <span class="text-xs">VIP</span>
                             </button>
                             <div class="max-sm:hidden"></div>
-                            <button type="button" data-seat="3" class="siege VIP flex flex-col justify-center">
+                            <button type="button" data-seat="3" class="siege vip flex flex-col justify-center">
                                 3 <span class="text-xs">VIP</span>
                             </button>
-                            <button type="button" data-seat="4" class="siege VIP flex flex-col justify-center">
+                            <button type="button" data-seat="4" class="siege vip flex flex-col justify-center">
                                 4 <span class="text-xs">VIP</span>
                             </button>
 
@@ -141,7 +141,6 @@
                             <button type="button" data-seat="8" class="siege libre flex flex-col justify-center">
                                 8 <span class="text-xs">Libre</span>
                             </button>
-                            <div class="max-sm:hidden"></div>
                             <button type="button" data-seat="9" class="siege libre flex flex-col justify-center">
                                 9 <span class="text-xs">Libre</span>
                             </button>
@@ -155,7 +154,6 @@
                             <button type="button" data-seat="12" class="siege libre flex flex-col justify-center">
                                 12 <span class="text-xs">Libre</span>
                             </button>
-                            <div class="max-sm:hidden"></div>
                             <button type="button" data-seat="13" class="siege libre flex flex-col justify-center">
                                 13 <span class="text-xs">Libre</span>
                             </button>
@@ -169,7 +167,6 @@
                             <button type="button" data-seat="16" class="siege libre flex flex-col justify-center">
                                 16 <span class="text-xs">Libre</span>
                             </button>
-                            <div class="max-sm:hidden"></div>
                             <button type="button" data-seat="17" class="siege libre flex flex-col justify-center">
                                 17 <span class="text-xs">Libre</span>
                             </button>
@@ -268,12 +265,12 @@
                 </section>
 
                 <section class="bg-amber-50 border border-amber-100  rounded-xl p-5">
-                    <div>
+                    <div class="flex text-center justify-between">
                         <h2 class="text-lg font-bold text-amber-600 mb-4">
                             <span class="inline-flex items-center justify-center bg-amber-500 text-white rounded-lg w-9 h-9 mr-2"><i class="fa-solid fa-user-clock" style="color: rgb(255, 255, 255);"></i></span>List d'attente
                         </h2>
 
-                        <span class="bg-amber-100 text-amber-800 rounded-full px-3 py-1 text-sm font-semibold">
+                        <span class="bg-amber-100 text-amber-800 h-fit py-2 rounded-full px-3 text-sm font-semibold">
                             <span id="nombre-attente">0</span> personne(s)
                         </span>
                     </div>

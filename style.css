@@ -1,0 +1,19 @@
+.siege {
+    border-radius: 8px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    height: 3rem;
+}
+
+.libre {
+    background-color: #0d9488;
+}
+
+.occupe {
+    background-color: #f43f5e;
+}
+
+.vip{
+    background-color: #FFB900;
+}
