@@ -5,10 +5,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BusDirect | Gestion des Réservations de Sièges</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="output.css">
+    <link rel="stylesheet" href="css/output.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css" integrity="sha512-x9WwyMYBnlXMNQ6kQ/Lyzu1NqIhLQKL5Oq6xByfXuRj7s9CskyCbLv/1IjqzJmXwFXWr0ov6jBV7Qbc0hh9nHg==" crossorigin="anonymous" referrerpolicy="no-referrer">
 </head>
-<body>
-    
+<body class="bg-slate-50 text-slate-800">
+    <!--header-->
+    <header class="bg-teal-700 text-white">
+        
+        <nav class="max-w-7xl mx-auto px-6 py-4 flex flex-wrap items-center justify-between">
+
+            <a href="index.html" class="flex items-center gap-3">
+                <span class="text-4xl">
+                    <i class="fa-solid fa-bus" style="color: white;"></i>
+                </span>
+                <div>
+                    <h1 class="text-2xl font-bold">BusDirect</h1>
+                </div>
+            </a>
+
+            <button type="button" id="menu" aria-expanded="false" class="hidden max-sm:block text-white text-2xl p-2">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div
+                id="mobile-links" class="hidden w-full flex-col bg-teal-700 text-white md:flex md:w-auto md:flex-row md:items-center md:gap-6 md:bg-transparent">
+                <a href="index.html" class="block w-full border border-b border-slate-200 px-5 py-4 font-semibold md:w-auto md:border-0 md:px-0 md:py-0">
+                    <i class="fa-regular fa-house"></i> Accueil
+                </a>
+
+                <a href="/ticket.html" class="block w-full px-5 py-4 font-semibold md:w-auto md:border-0 md:px-0 md:py-0">
+                    <i class="fa-solid fa-ticket"></i> Tickets
+                </a>
+            </div>
+
+        </nav>
+
+    </header>
+
+    <!--main-->
+    <main class="max-w-7xl mx-auto p-6 py-7">
+        <!-- trajets information -->
+        <section id="trajets-information" class="grid grid-cols-3 gap-6 mb-7 items-center">
+            <div class="bg-teal-50 p-4 border-teal-100 rounded-xl">
+                <h3 class="text-3xl font-bold text-teal-900">Total des trajets</h3>
+                <span><strong>20 </strong>trajets dans le réseau</span>
+            </div>
+            <div class="bg-teal-50 border-teal-100 p-4 rounded-xl">
+                <h3 class="text-3xl font-bold text-teal-900">Nombre de passagers</h3>
+                <span><strong id="nombre-passager">0 </strong>sur l'ensemble du réseau</span>
+            </div>
+            <div class="bg-teal-50 p-4 border-teal-100 rounded-xl">
+                <h3 class="text-3xl font-bold text-teal-900">Recette total</h3>
+                <span><strong id="recette-total">0 </strong>depuit le début</span>
+            </div>
+        </section>
+
+        <!-- search&filter -->
+        <section id="search-filter" class=" bg-teal-50 grid grid-cols-3 gap-6 mb-7 p-5 items-center rounded-xl">
+            <form id="search" id="search" class="bg-white border-2 border-teal-100 col-span-2 p-3 rounded-md grid">
+                <input class="outline-none" type="search" name="search" id="search" placeholder="Rechercher un trajet (ville,destination...)" class="w-full h-full">
+            </form>
+            <select name="filter" id="filter" class="outline-none border-2 border-teal-100 p-3 rounded-md w-full h-full">
+                <option value="tous">Tous les trajets</option>
+                <option value="disponible">Disponible</option>
+                <option value="complet">Complet</option>
+            </select>
+        </section>
+
+        <!-- list-trajet -->
+        <section id="list-trajet" class="grid grid-cols-3 m-5 gap-4">
+            
+        </section>
+
+        <!-- pagination -->
+        <nav id="pagination" class="flex justify-center gap-3 mt-8">
+            <button type="button" id="1" class="px-4 py-2 rounded-lg bg-teal-400 text-white">1</button>
+            <button type="button" id="2" class="px-4 py-2 rounded-lg bg-teal-200 text-white hover:bg-teal-300">2</button>
+            <button type="button" id="3" class="px-4 py-2 rounded-lg bg-teal-200 text-white hover:bg-teal-300">3</button>
+            <button type="button" id="4" class="px-4 py-2 rounded-lg bg-teal-200 text-white hover:bg-teal-300">4</button>
+        </nav>
+
+    </main>
+
+    <!--footer-->
+    <footer class="border-t border-slate-200 bg-white mt-8">
+        <div class="max-w-7xl mx-auto px-6 py-5 text-center text-sm text-slate-500">
+            &copy; 2026 BusDirect — Tous droits réservés.
+        </div>
+    </footer>
+
+    <script src="js/main-trajets.js"></script>
 </body>
 </html>
