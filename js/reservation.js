@@ -1,4 +1,4 @@
-import { validerPassager } from "./validators";
+import { validerPassager } from "./validators.js";
 
 export function placesLibres(trip){
     return trip.capacity -trip.reservations.length;

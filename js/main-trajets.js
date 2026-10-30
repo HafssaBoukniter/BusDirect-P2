@@ -1,9 +1,11 @@
-import { initialiser,sauvegarder } from "./store.js";
+import { initialiser } from "./store.js";
 import { renderTrajets } from "./render.js";
 
-// const trip = await initialiser();
-// console.table(trip);
+const trip = await initialiser();
+console.table(trip);
 
 async function afficher(){
-
+    renderTrajets(trip);
 }
+
+afficher()
