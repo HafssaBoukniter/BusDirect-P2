@@ -66,12 +66,11 @@
 
         <!-- search&filter -->
         <section id="search-filter" class=" bg-teal-50 grid grid-cols-3 gap-6 mb-7 p-5 items-center rounded-xl">
-            <form id="search" id="search" class="bg-white border-2 border-teal-100 col-span-2 p-3 rounded-md grid">
-                <input class="outline-none" type="search" name="search" id="search"
+            <form class="bg-white border-2 border-teal-100 col-span-2 p-3 rounded-md grid">
+                <input id="search" class="outline-none" type="search" name="search" id="search"
                     placeholder="Rechercher un trajet (ville,destination...)" class="w-full h-full">
             </form>
-            <select name="filter" id="filter"
-                class="outline-none border-2 bg-white border-teal-100 p-3 rounded-md w-full h-full">
+            <select id="filter" name="filter" class="outline-none border-2 bg-white border-teal-100 p-3 rounded-md w-full h-full">
                 <option value="tous">Tous les trajets</option>
                 <option value="disponible">Disponible</option>
                 <option value="complet">Complet</option>
