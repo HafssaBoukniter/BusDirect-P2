@@ -1,6 +1,6 @@
-import { initialiser,sauvegarder } from "./store";
-import { renderCabine,renderListeAttente } from "./render";
-import { reserver,modifier,annuler,inscrireEnAttente,retirerDeAttente } from "./reservation";
+import { initialiser } from "./store.js";
+import { renderCabine,renderListeAttente } from "./render.js";
+import { reserver,modifier,annuler,inscrireEnAttente,retirerDeAttente } from "./reservation.js";
 
 async function afficherTout() {
     

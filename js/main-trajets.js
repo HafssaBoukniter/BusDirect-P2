@@ -67,9 +67,19 @@ async function afficher(){
 
         pageActuelle = Number(btn.dataset.page);
 
-        
-
         afficherPage();
+    });
+
+    listT.addEventListener("click" ,e =>{
+        const btn = e.target.closest(".ouvrir");
+
+        if(!btn) return;
+
+        const id = btn.dataset.id;
+
+        console.log("Id",id);
+
+        location.href = `cabine.html?id=${id}`;
     });
 
     afficherPage();

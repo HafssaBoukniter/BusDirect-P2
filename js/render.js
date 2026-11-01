@@ -64,7 +64,7 @@ export function renderTrajets(trips){
                     </div>
                 </div>
 
-                <button class="bg-teal-800 text-white w-full rounded-xl p-2" type="submit"><a href="cabine.html">Gérer la cabine →</a></button>
+                <button data-id="${trip.id}" class="ouvrir bg-teal-800 text-white w-full rounded-xl p-2" type="submit">Gérer la cabine →</button>
             </div>
         `;
     }).join("");
