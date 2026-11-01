@@ -88,7 +88,33 @@ export function renderTrajets(trips){
 }
 
 export function renderPagination(page, total){
+    const pagination = document.getElementById("pagination");
 
+    if(!pagination) return;
+
+    let pages = "";
+
+    if(page > 1){
+        pages =` 
+            <button type="button" id="precedent" data-page="${page - 1}" ${page <= 1 ? "disabled" : ""}
+                class="px-4 py-2 rounded-lg bg-teal-200 text-white hover:bg-teal-300"><</button>
+        `;
+    }
+    
+
+    for(let i =1; i <= total;i++){
+        pages+= `<button id="${i}" data-page="${i}" ${page === i ? "disabled" : ""} type="button" class="px-4 py-2 rounded-lg ${page === i ? "bg-teal-400" :"bg-teal-200"} hover:bg-teal-300 text-white">${i}</button>`;
+    }
+
+    if(page < total){
+        pages += `
+            <button type="button" id="suivant" data-page="${page + 1}" ${page >= total ? "disabled" : ""}
+                class="px-4 py-2 rounded-lg bg-teal-200 text-white hover:bg-teal-300">></button>
+        `;
+    }
+    
+
+    pagination.innerHTML = pages;
 }
 
 export function renderCabine(trip){
