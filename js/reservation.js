@@ -9,11 +9,18 @@ export function estComplet(trip){
 }
 
 export function estVIP(siege){
+    return Number(siege) >= 1 && Number(siege) <= 4; 
+}
 
+export function prixSiege(prix,numero){
+    return estVIP(numero) ? Math.round(prix * 1.1) : prix;
 }
 
 export function recetteTrajet(trip){
-    return trip.reservations.length * trip.price;
+    const totale =trip.reservations.reduce((total,reservation) =>{
+        return total + prixSiege(trip.price,reservation.seat);
+    },0);
+    return totale;
 }
 
 export function reserver(trip, p, siege){
