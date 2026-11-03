@@ -11,44 +11,37 @@ const filter = document.getElementById("filter");
 const listT = document.getElementById("list-trajet");
 const pagination = document.querySelector("#pagination");
 
-const res = trips;
+let res = trips;
 
 let pageActuelle = 1;
 const limit = 6;
 
 async function afficher(){
 
-    search.addEventListener("input", e =>{
-        e.preventDefault();
-
+    function actualiser(){
         const valeur = search.value.trim();
-        
-
-        const recherche = trips.filter(trip =>{
-            return trip.departure.toLowerCase().includes(valeur) || trip.destination.toLowerCase().includes(valeur)
-        });
-
-        if(recherche.length === 0){
-            listT.innerHTML = `<p class="text-center w-full"> Aucun trajet ne correspond.</p>`;
-            return;
-        }
-
-        renderTrajets(recherche);
-        pageActuelle = 1;
-    });
-
-    filter.addEventListener ("change",e =>{
-        e.preventDefault();
-
         const statut = filter.value;
 
-        const filtrage = trips.filter(trip =>{
-            return statut === "tous" || (statut === "disponible" && !estComplet(trip)) || (statut === "complet" && estComplet(trip))
+        res = trips.filter(trip =>{
+            const recherche = trip.departure.toLowerCase().includes(valeur) || trip.destination.toLowerCase().includes(valeur);
+
+            const filtrage = statut === "tous" || (statut === "disponible" && !estComplet(trip)) || (statut === "complet" && estComplet(trip));
+
+            if(res.length === 0){
+                listT.innerHTML = `<p class="text-center w-full"> Aucun trajet ne correspond.</p>`;
+                return;
+            }
+
+            return recherche && filtrage;
         });
 
-        renderTrajets(filtrage);
         pageActuelle = 1;
-    });
+        afficherPage()
+    }
+
+    
+    search.addEventListener("input", actualiser);
+    filter.addEventListener ("change", actualiser);
 
     function afficherPage(){
         const nbrPages = Math.ceil(res.length / limit);
@@ -83,6 +76,7 @@ async function afficher(){
     });
 
     afficherPage();
+    actualiser()
 }
 
 afficher()
