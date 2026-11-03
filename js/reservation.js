@@ -13,7 +13,7 @@ export function estVIP(siege){
 }
 
 export function recetteTrajet(trip){
-
+    return trip.reservations.length * trip.price;
 }
 
 export function reserver(trip, p, siege){
