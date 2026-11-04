@@ -198,10 +198,12 @@
                         <div class="mb-3">
                             <label for="nom-reservation" class="block text-sm font-medium mb-2">Nom du passager <span class="text-rose-500">*</span></label>
                             <input type="text" id="nom-reservation" name="nom" placeholder="Ex : Hafssa"  class="w-full border border-slate-300 rounded-lg  px-3 py-2.5 outline-none  focus:border-teal-500">
+                            <p id="error-nom" class="text-sm mt-3"></p>
                         </div>
                         <div class="mb-3">
                             <label for="tel-reservation" class="block text-sm font-medium mb-2">Téléphone <span class="text-rose-500">*</span></label>
                             <input type="tel" id="tel-reservation" name="tel" placeholder="Ex : 06XXXXXXXX"  class="w-full border border-slate-300 rounded-lg  px-3 py-2.5 outline-none  focus:border-teal-500">
+                            <p id="error-phone" class="text-sm mt-3"></p>
                         </div>
                         <div class="mb-4">
                             <label for="siege-reservation" class="block text-sm font-medium mb-2">Choisir un siège (optionnel)</label>
@@ -209,7 +211,7 @@
                             </select>
                         </div>
                         <button type="submit" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-lg py-3">Réserver</button>
-                        <p id="message-reservation" role="status" aria-live="polite" class="text-sm mt-3"></p>
+                        <p id="message-reservation" class="text-sm mt-3"></p>
                     </form>
 
                 </section>

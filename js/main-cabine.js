@@ -1,28 +1,47 @@
-import { initialiser } from "./store.js";
-import { renderCabine,renderListeAttente } from "./render.js";
-import { reserver,modifier,annuler,inscrireEnAttente,retirerDeAttente } from "./reservation.js";
+import { initialiser, sauvegarder } from "./store.js";
+import { afficherMessage, renderCabine,renderListeAttente } from "./render.js";
+import { reserver,modifier,annuler,inscrireEnAttente,retirerDeAttente, estVIP, prixSiege } from "./reservation.js";
+import { validerPassager } from "./validators.js";
 
 const id = Number(new URLSearchParams(location.search).get("id"));
 const tripInfo = document.querySelector("#trip-information");
 const sieges = document.querySelectorAll(".siege");
 const selectReservation = document.getElementById("siege-reservation");
+const passagerReserve = document.querySelector("#nom-reservation");
+const phonePassager = document.querySelector("#tel-reservation");
 const updateSelect = document.getElementById("nouveau-siege");
 const passagerSelectModif = document.querySelector("#passager-modification");
 const passagerSupp = document.querySelector("#passager-suppression");
 const mainBody = document.querySelector(".main-body");
+const formRes = document.getElementById("form-reservation");
+const parReserver = document.querySelector("#message-reservation");
+const formModif = document.getElementById("form-modification");
+const formSupp = document.getElementById("form-suppression");
+
+
+function getTrips(){
+    localStorage.getItem("trips") || [];
+}
+
+function sauvegarderTrips(){
+    sauvegarder(trips);
+}
+
+const trips = await initialiser();
 
 
 
-function reservationSelect() {
+function reservationSelect(trip) {
     selectReservation.innerHTML = '<option value="">Sélectionner un siège</option>';
     updateSelect.innerHTML = '<option value="">Sélectionner un nouveau siège</option>';
 
     sieges.forEach(siege => {
         if (siege.classList.contains("libre")) {
+            const numSiege = Number(siege.dataset.seat);
             const option = document.createElement("option");
 
-            option.value = siege.dataset.seat;
-            option.textContent = `Siège ${siege.dataset.seat}`;
+            option.value = numSiege;
+            option.textContent = estVIP(numSiege) ?`Siège ${siege.dataset.seat} - VIP - ${prixSiege(trip.price,numSiege)}` : `Siège ${siege.dataset.seat}`;
 
             selectReservation.appendChild(option);
             updateSelect.appendChild(option.cloneNode(true));
@@ -54,7 +73,8 @@ function modifSuppPassSelect() {
 }
 
 async function afficherTout() {
-    const trips = await initialiser();
+    getTrips();
+    console.log(trips)
 
     const trip = trips.find(trip => trip.id === id);
 
@@ -70,20 +90,64 @@ async function afficherTout() {
 
     sieges.forEach(siege =>{
         const nomPassager = siege.querySelector(".nomText");
-        const phonePassager = siege.querySelector(".phoneText");
+        const phoneSiege = siege.querySelector(".phoneText");
         let result=trip.reservations.find(tt=>{
             return Number(siege.dataset.seat) === Number(tt.seat)
         });
         if(result){
             nomPassager.textContent = result.name;
-            phonePassager.textContent =result.phone;
+            phoneSiege.textContent =result.phone;
             siege.classList.add("occupe");
             siege.classList.remove("libre");
         }
     });
 
+    formRes.addEventListener("submit" ,e =>{
+        e.preventDefault();
 
-    reservationSelect();
+        const p = {
+            name : passagerReserve.value.trim(),
+            phone : phonePassager.value.trim()
+        };
+
+        let siege = Number(selectReservation.value);
+
+        if(!validerPassager(trip,p)){
+            return;
+        }
+
+        if(!siege){
+            const siegeLibre = [...sieges].find(s =>{
+                return s.classList.contains("libre") && !estVIP(Number(s.dataset.seat));
+            });
+
+            if(!siegeLibre){
+                afficherMessage(parReserver,"Aucun siege libre.");
+                return;
+            }
+
+            siege = Number(siegeLibre.dataset.seat);
+        }
+
+        const resultat =reserver(trip,p,siege);
+
+        if(resultat){
+            afficherMessage(parReserver,"Réservation confirmée.");
+        }
+
+        sauvegarderTrips();
+
+        reservationSelect(trip);
+        modifSuppPassSelect();
+        renderCabine(trip);
+
+        formRes.reset();
+    });
+    formModif.addEventListener("submit" ,e =>{e.preventDefault()});
+    formSupp.addEventListener("submit" ,e =>{e.preventDefault()});
+
+
+    reservationSelect(trip);
     modifSuppPassSelect();
     renderCabine(trip);
 }
