@@ -1,6 +1,6 @@
 import { initialiser, sauvegarder } from "./store.js";
-import { afficherMessage, renderCabine,renderListeAttente } from "./render.js";
-import { reserver,modifier,annuler,inscrireEnAttente,retirerDeAttente, estVIP, prixSiege } from "./reservation.js";
+import { afficherMessage, listAttente, renderCabine,renderListeAttente } from "./render.js";
+import { reserver,modifier,annuler,inscrireEnAttente,retirerDeAttente, estVIP, prixSiege, estComplet } from "./reservation.js";
 import { validerPassager } from "./validators.js";
 
 const id = Number(new URLSearchParams(location.search).get("id"));
@@ -21,6 +21,8 @@ const nouveauNom = document.querySelector("#nouveau-nom");
 const nouveauPhone = document.querySelector("#nouveau-phone");
 const parModif = document.querySelector("#message-modification");
 const parSupp = document.querySelector("#message-suppression");
+const listAttenteAff = document.querySelector("#listAttenteAff");
+const disabledForm = document.querySelector("#disabled");
 
 
 function sauvegarderTrips(){
@@ -48,6 +50,26 @@ function actualiserSiege(trip){
             siege.classList.remove("occupe");
         }
     });
+}
+
+function actualiserListAttente(trip){
+    if(estComplet(trip)){
+        listAttenteAff.classList.remove("hidden");
+        disabledForm.disabled = true;
+        disabledForm.style.opacity = 0.5;
+    }else{
+        listAttenteAff.classList.add("hidden");
+        disabledForm.style.opacity = 1;
+    }
+
+    if(estComplet(trip) && trip.waitingList.length == 0){
+        listAttenteAff.classList.add("hidden");
+    }else{
+        listAttenteAff.classList.remove("hidden");
+    }
+
+    listAttente(trip);
+    renderListeAttente(trip);
 }
 
 
@@ -108,6 +130,9 @@ async function afficherTout() {
     }
 
     actualiserSiege(trip);
+    actualiserListAttente(trip);
+
+    console.log(trip.waitingList)
 
     formRes.addEventListener("submit" ,e =>{
         e.preventDefault();
@@ -204,11 +229,28 @@ async function afficherTout() {
 
         console.log("Réservations après:", trip.reservations);
 
-        afficherMessage(parSupp,"Suppression confirmée.");
+
+
+        if(trip.waitingList.length > 0){
+            const passager = trip.waitingList[0];
+
+            const siegeLibre = Number(passExist);
+
+            const reslt = reserver(trip,passager,siegeLibre);
+
+            afficherMessage(parSupp,`${passager.name}  a obtenu le siège ${siegeLibre}`);
+            
+            if(reslt){
+                trip.waitingList.splice(0, 1);
+            }
+        }else{
+            afficherMessage(parSupp,"Suppression confirmée.");
+        }
 
         sauvegarderTrips()
 
         actualiserSiege(trip);
+        actualiserListAttente(trip);
         renderCabine(trip);
         reservationSelect(trip);
         modifSuppPassSelect();
@@ -216,6 +258,52 @@ async function afficherTout() {
         formSupp.reset();
     });
 
+    renderListeAttente(trip);
+
+    const passagerListAt = document.querySelector("#nom-listattente");
+    const phoneListAt = document.querySelector("#tel-listattente");
+    const formListAt = document.getElementById("form-listattente");
+    const parLA = document.querySelector("#message-listattente");
+
+   if(formListAt){
+        formListAt.addEventListener("submit", e =>{
+            e.preventDefault();
+
+            const p = {
+                name : passagerListAt.value.trim(),
+                phone : phoneListAt.value.trim()
+            };
+
+            if(!validerPassager(trip,p)){
+                return;
+            }
+
+            afficherMessage(parLA,"Vous avez ajouter dans la liste d'attente.");
+
+            inscrireEnAttente(trip,p);
+            sauvegarderTrips();
+            actualiserListAttente(trip);
+        });
+   }
+
+   listAttente(trip);
+
+   const container = document.querySelectorAll(".waitPassager");
+   if(container){
+        container.forEach(div=>{
+            div.addEventListener("click",e =>{
+                e.preventDefault();
+                const btn = e.target.closest(".retirer");
+                const index = Number(btn.dataset.index);
+                retirerDeAttente(trip,index);
+
+                sauvegarderTrips();
+                listAttente(trip);
+                actualiserListAttente(trip);
+            })   
+        })
+    }
+   
 
     reservationSelect(trip);
     modifSuppPassSelect();

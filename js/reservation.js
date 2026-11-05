@@ -57,9 +57,9 @@ export function annuler(trip, siege){
 }
 
 export function inscrireEnAttente(trip, p){
-
+    trip.waitingList.push(p)
 }
 
 export function retirerDeAttente(trip, i){
-
+    trip.waitingList.splice(i,1);
 }

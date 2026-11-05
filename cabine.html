@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -108,7 +107,7 @@
 
                 </div>
 
-                <div class="p-6 sm:p-8 flex justify-center">
+                <div class="p-6 sm:p-8 flex flex-col gap-5 justify-center">
 
                     <div class="bus w-full max-w-2sm rounded-[45px] border-2 border-slate-300 bg-slate-100 p-4 sm:p-6">
 
@@ -183,6 +182,10 @@
 
                         </div>
                     </div>
+
+                    <div id="listAttenteAff" class="w-full max-w-2sm rounded-[45px] border-2 border-slate-300 bg-slate-100 p-4 sm:p-6 hidden">
+                        
+                    </div>
                 </div>
             </section>
 
@@ -195,22 +198,24 @@
                     </h2>
 
                     <form id="form-reservation">
-                        <div class="mb-3">
-                            <label for="nom-reservation" class="block text-sm font-medium mb-2">Nom du passager <span class="text-rose-500">*</span></label>
-                            <input type="text" id="nom-reservation" name="nom" placeholder="Ex : Hafssa"  class="w-full border border-slate-300 rounded-lg  px-3 py-2.5 outline-none  focus:border-teal-500">
-                            <p id="error-nom" class="text-sm mt-3"></p>
-                        </div>
-                        <div class="mb-3">
-                            <label for="tel-reservation" class="block text-sm font-medium mb-2">Téléphone <span class="text-rose-500">*</span></label>
-                            <input type="tel" id="tel-reservation" name="tel" placeholder="Ex : 06XXXXXXXX"  class="w-full border border-slate-300 rounded-lg  px-3 py-2.5 outline-none  focus:border-teal-500">
-                            <p id="error-phone" class="text-sm mt-3"></p>
-                        </div>
-                        <div class="mb-4">
-                            <label for="siege-reservation" class="block text-sm font-medium mb-2">Choisir un siège (optionnel)</label>
-                            <select id="siege-reservation" name="siege" class="w-full border border-slate-300 rounded-lg px-3 py-2.5 bg-white outline-none focus:border-teal-500">
-                            </select>
-                        </div>
-                        <button type="submit" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-lg py-3">Réserver</button>
+                        <fieldset id="disabled">
+                            <div class="mb-3">
+                                <label for="nom-reservation" class="block text-sm font-medium mb-2">Nom du passager <span class="text-rose-500">*</span></label>
+                                <input type="text" id="nom-reservation" name="nom" placeholder="Ex : Hafssa"  class="w-full border border-slate-300 rounded-lg  px-3 py-2.5 outline-none  focus:border-teal-500">
+                                <p id="error-nom" class="text-sm mt-3"></p>
+                            </div>
+                            <div class="mb-3">
+                                <label for="tel-reservation" class="block text-sm font-medium mb-2">Téléphone <span class="text-rose-500">*</span></label>
+                                <input type="tel" id="tel-reservation" name="tel" placeholder="Ex : 06XXXXXXXX"  class="w-full border border-slate-300 rounded-lg  px-3 py-2.5 outline-none  focus:border-teal-500">
+                                <p id="error-phone" class="text-sm mt-3"></p>
+                            </div>
+                            <div class="mb-4">
+                                <label for="siege-reservation" class="block text-sm font-medium mb-2">Choisir un siège (optionnel)</label>
+                                <select id="siege-reservation" name="siege" class="w-full border border-slate-300 rounded-lg px-3 py-2.5 bg-white outline-none focus:border-teal-500">
+                                </select>
+                            </div>
+                            <button type="submit" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-lg py-3">Réserver</button>
+                        </fieldset>
                         <p id="message-reservation" class="text-sm mt-3"></p>
                     </form>
 
@@ -271,32 +276,8 @@
 
                 </section>
 
-                <section class="bg-amber-50 border border-amber-100  rounded-xl p-5">
-                    <div class="flex text-center justify-between">
-                        <h2 class="text-lg font-bold text-amber-600 mb-4">
-                            <span class="inline-flex items-center justify-center bg-amber-500 text-white rounded-lg w-9 h-9 mr-2"><i class="fa-solid fa-user-clock" style="color: rgb(255, 255, 255);"></i></span>List d'attente
-                        </h2>
-
-                        <span class="bg-amber-100 text-amber-800 h-fit py-2 rounded-full px-3 text-sm font-semibold">
-                            <span id="nombre-attente">0</span> personne(s)
-                        </span>
-                    </div>
+                <section id="listattente" class="bg-amber-50 border border-amber-100  rounded-xl p-5">
                     
-                    <form id="form-listattente">
-                        <div class="mb-3">
-                            <label for="nom-attente" class="block text-sm font-medium mb-2">Nom du passager <span class="text-rose-500">*</span></label>
-                            <input type="text" id="nom-listattente" name="nom" placeholder="Ex : Hafssa"  class="w-full border border-slate-300 rounded-lg  px-3 py-2.5 outline-none  focus:border-teal-500">
-                        </div>
-                        <div class="mb-3">
-                            <label for="tel-listattente" class="block text-sm font-medium mb-2">Téléphone <span class="text-rose-500">*</span></label>
-                            <input type="tel" id="tel-listattente" name="tel" placeholder="Ex : 06XXXXXXXX"  class="w-full border border-slate-300 rounded-lg  px-3 py-2.5 outline-none  focus:border-teal-500">
-                        </div>
-
-                        <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg py-3">Ajouter à list d'attente</button>
-
-                        <p id="message-listattente" role="status" aria-live="polite" class="text-sm mt-3"></p>
-                    </form>
-
                 </section>
 
             </div>
