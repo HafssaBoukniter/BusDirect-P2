@@ -22,18 +22,9 @@
                 </div>
             </a>
 
-            <button type="button" id="menu" aria-expanded="false" class="hidden max-sm:block text-white text-2xl p-2">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-
-            <div
-                id="mobile-links" class="hidden w-full flex-col bg-teal-700 text-white md:flex md:w-auto md:flex-row md:items-center md:gap-6 md:bg-transparent">
-                <a href="index.html" class="block w-full  px-5 py-4 font-semibold md:w-auto md:border-0 md:px-0 md:py-0">
-                    <i class="fa-regular fa-house"></i> Retour aux trajets
-                </a>
-
-                <a href="/ticket.html" class="block w-full px-5 py-4 font-semibold md:w-auto md:border-0 md:px-0 md:py-0">
-                    <i class="fa-solid fa-ticket"></i> Tickets
+            <div class="flex items-center">
+                <a href="index.html" class="font-semibold">
+                    <i class="fa-regular fa-house"></i>trajets
                 </a>
             </div>
 
@@ -42,9 +33,9 @@
     </header>
 
     <!--main-->
-    <main class="max-w-7xl mx-auto px-6 py-7">
+    <main id="trip-information" class="max-w-7xl mx-auto px-6 py-7">
         <div id="tripInfo" class="hidden"></div>
-        <section id="trip-information" class="bg-teal-50 border border-teal-100 rounded-xl p-5 mb-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 items-center">
+        <section class="bg-teal-50 border border-teal-100 rounded-xl p-5 mb-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 items-center">
             <div class="">
                 <h2 id="trajet-titre" class="text-3xl font-bold text-teal-900">
                 </h2>

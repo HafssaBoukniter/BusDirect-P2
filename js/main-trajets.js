@@ -3,7 +3,6 @@ import { renderPagination, renderTrajets } from "./render.js";
 import { estComplet } from "./reservation.js";
 
 const trips = await initialiser();
-console.table(trips);
 
 const search = document.getElementById("search");
 const filter = document.getElementById("filter");
@@ -69,8 +68,6 @@ async function afficher(){
         if(!btn) return;
 
         const id = btn.dataset.id;
-
-        console.log("Id",id);
 
         location.href = `cabine.html?id=${id}`;
     });

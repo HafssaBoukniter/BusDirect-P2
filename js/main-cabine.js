@@ -159,7 +159,6 @@ function dragItem(trip){
 }
 
 async function afficherTout() {
-    console.table(trips);
 
     const trip = trips.find(trip => trip.id === id);
 
@@ -175,8 +174,6 @@ async function afficherTout() {
 
     actualiserSiege(trip);
     actualiserListAttente(trip);
-
-    console.log(trip.waitingList)
 
     formRes.addEventListener("submit" ,e =>{
         e.preventDefault();
@@ -266,13 +263,7 @@ async function afficherTout() {
             return;
         }
 
-        console.log("Passager sélectionné:", passagerSupp.value);
-        console.log("Réservations avant:", trip.reservations);
-
         annuler(trip,passExist);
-
-        console.log("Réservations après:", trip.reservations);
-
 
 
         if(trip.waitingList.length > 0){
