@@ -1,4 +1,4 @@
-import { estComplet,placesLibres } from "./reservation.js";
+import { estComplet,placesLibres,recetteTrajet } from "./reservation.js";
 
 export function renderTrajets(trips){
     const listT = document.querySelector("#list-trajet");
@@ -118,7 +118,20 @@ export function renderPagination(page, total){
 }
 
 export function renderCabine(trip){
+    document.getElementById("trajet-titre").textContent = `${trip.departure} → ${trip.destination}`;
 
+    document.getElementById("heure-depart").textContent = `${trip.departureTime}`;
+
+    document.getElementById("heure-arrivee").textContent = `${trip.arrivalTime}`;
+
+    document.getElementById("places-disponibles").textContent = placesLibres(trip);
+
+    document.getElementById("prix-normal").textContent = `${trip.price}`;
+
+    const prixVip = Math.round(trip.price * 1.1);
+    document.getElementById("prix-vip").textContent = prixVip;
+
+    document.getElementById("totale").textContent = recetteTrajet(trip);
 }
 
 export function renderListeAttente(trip){

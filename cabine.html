@@ -44,25 +44,25 @@
 
     <!--main-->
     <main class="max-w-7xl mx-auto px-6 py-7">
+        <div id="tripInfo" class="hidden"></div>
         <section id="trip-information" class="bg-teal-50 border border-teal-100 rounded-xl p-5 mb-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 items-center">
             <div class="">
                 <h2 id="trajet-titre" class="text-3xl font-bold text-teal-900">
-                    Safi <span class="text-teal-600">→</span> Marrakech
                 </h2>
 
                 <div class="flex flex-row gap-5">
                     <p class="text-sm text-slate-600 mt-3">
-                        <i class="fa-regular fa-calendar-days" style="color: rgb(0, 150, 137);"></i> Départ : <span id="heure-depart">08:00</span>
+                        <i class="fa-regular fa-calendar-days" style="color: rgb(0, 150, 137);"></i> Départ : <span id="heure-depart"></span>
                     </p>
                     <p class="text-sm text-slate-600 mt-3">
-                        <i class="fa-regular fa-clock" style="color: rgb(0, 150, 137);"></i> Arrivée : <span id="heure-arrivee">10:30</span>
+                        <i class="fa-regular fa-clock" style="color: rgb(0, 150, 137);"></i> Arrivée : <span id="heure-arrivee"></span>
                     </p>
 
                 </div>
             </div>
             <div class="border-l border-teal-200 pl-5">
                 <p class="text-sm text-slate-600"><i class="fa-solid fa-chair" style="color: rgb(0, 150, 137);"></i> Places disponibles</p>
-                <p class="text-3xl font-bold text-teal-700 mt-1"><span id="places-disponibles">20</span></p>
+                <p class="text-3xl font-bold text-teal-700 mt-1"><span id="places-disponibles"></span></p>
             </div>
             <div class="border-l border-teal-200 pl-5">
                 <p class="text-sm text-slate-600">Recette totale</p>
@@ -74,19 +74,19 @@
             <div class="border-l border-teal-200 pl-5">
                 <p class="text-sm text-slate-600">Prix normal</p>
                 <p class="text-3xl font-bold text-slate-800 mt-1">
-                    <span id="prix-normal">90</span>
+                    <span id="prix-normal"></span>
                     <span class="text-lg">DH</span>
                 </p>
             </div>
             <div class="border-l border-teal-200 pl-5">
                 <p class="text-sm text-slate-600">Prix VIP</p>
                 <p class="text-3xl font-bold text-slate-800 mt-1">
-                    <span id="prix-vip">99</span>
+                    <span id="prix-vip"></span>
                     <span class="text-lg">DH</span>
                 </p>
             </div>
         </section>
-        <div class="grid grid-cols-1 lg:grid-cols-5 gap-5">
+        <div class="main-body grid grid-cols-1 lg:grid-cols-5 gap-5">
             <section class="lg:col-span-3 bg-white border border-slate-200 rounded-xl overflow-hidden">
 
                 <div class="flex items-center gap-8 p-5 border-b border-slate-200">
@@ -112,73 +112,73 @@
 
                     <div class="bus w-full max-w-2sm rounded-[45px] border-2 border-slate-300 bg-slate-100 p-4 sm:p-6">
 
-                        <div id="plan-sieges" class="grid grid-cols-5 grid-cols[1fr_1fr_1rem_1fr_1fr] max-sm:grid-cols-2 max-sm:grid-cols[1fr_1fr] gap-4 p-2">
+                        <div id="plan-sieges" class="grid grid-cols-5 grid-cols[1fr_1fr_1rem_1fr_1fr] h-full max-sm:grid-cols-2 max-sm:grid-cols[1fr_1fr] gap-4 p-2">
 
-                            <button type="button" data-seat="1" class="siege vip flex flex-col justify-center">
-                                1 <span class="text-xs">VIP</span>
+                            <button type="button" data-seat="1" class="siege vip libre flex flex-col gap-2 p-2 h-full justify-center">
+                                1 <span class="text-xs nomText">VIP</span> <span class="text-xs phoneText"></span>
                             </button>
-                            <button type="button" data-seat="2" class="siege vip flex flex-col justify-center">
-                                2 <span class="text-xs">VIP</span>
+                            <button type="button" data-seat="2" class="siege vip libre flex flex-col gap-2 p-2 h-full justify-center">
+                                2 <span class="text-xs nomText">VIP</span> <span class="text-xs phoneText"></span>
                             </button>
                             <div class="max-sm:hidden"></div>
-                            <button type="button" data-seat="3" class="siege vip flex flex-col justify-center">
-                                3 <span class="text-xs">VIP</span>
+                            <button type="button" data-seat="3" class="siege vip libre flex flex-col gap-2 p-2 h-full justify-center">
+                                3 <span class="text-xs nomText">VIP</span> <span class="text-xs phoneText"></span>
                             </button>
-                            <button type="button" data-seat="4" class="siege vip flex flex-col justify-center">
-                                4 <span class="text-xs">VIP</span>
+                            <button type="button" data-seat="4" class="siege vip libre flex flex-col gap-2 p-2 h-full justify-center">
+                                4 <span class="text-xs nomText">VIP</span> <span class="text-xs phoneText"></span>
                             </button>
 
-                            <button type="button" data-seat="5" class="siege libre flex flex-col justify-center">
-                                5 <span class="text-xs">Libre</span>
+                            <button type="button" data-seat="5" class="siege libre flex flex-col gap-2 p-2 h-full justify-center">
+                                5 <span class="text-xs nomText">Libre</span> <span class="text-xs phoneText"></span>
                             </button>
-                            <button type="button" data-seat="6" class="siege libre flex flex-col justify-center">
-                                6 <span class="text-xs">Libre</span>
-                            </button>
-                            <div class="max-sm:hidden"></div>
-                            <button type="button" data-seat="7" class="siege libre flex flex-col justify-center">
-                                7 <span class="text-xs">Libre</span>
-                            </button>
-                            <button type="button" data-seat="8" class="siege libre flex flex-col justify-center">
-                                8 <span class="text-xs">Libre</span>
-                            </button>
-                            <button type="button" data-seat="9" class="siege libre flex flex-col justify-center">
-                                9 <span class="text-xs">Libre</span>
-                            </button>
-                            <button type="button" data-seat="10" class="siege libre flex flex-col justify-center">
-                                10 <span class="text-xs">Libre</span>
+                            <button type="button" data-seat="6" class="siege libre flex flex-col gap-2 p-2 h-full justify-center">
+                                6 <span class="text-xs nomText">Libre</span> <span class="text-xs phoneText"></span>
                             </button>
                             <div class="max-sm:hidden"></div>
-                            <button type="button" data-seat="11" class="siege libre flex flex-col justify-center">
-                                11 <span class="text-xs">Libre</span>
+                            <button type="button" data-seat="7" class="siege libre flex flex-col gap-2 p-2 h-full justify-center">
+                                7 <span class="text-xs nomText">Libre</span> <span class="text-xs phoneText"></span>
                             </button>
-                            <button type="button" data-seat="12" class="siege libre flex flex-col justify-center">
-                                12 <span class="text-xs">Libre</span>
+                            <button type="button" data-seat="8" class="siege libre flex flex-col gap-2 p-2 h-full justify-center">
+                                8 <span class="text-xs nomText">Libre</span> <span class="text-xs phoneText"></span>
                             </button>
-                            <button type="button" data-seat="13" class="siege libre flex flex-col justify-center">
-                                13 <span class="text-xs">Libre</span>
+                            <button type="button" data-seat="9" class="siege libre flex flex-col gap-2 p-2 h-full justify-center">
+                                9 <span class="text-xs nomText">Libre</span> <span class="text-xs phoneText"></span>
                             </button>
-                            <button type="button" data-seat="14" class="siege libre flex flex-col justify-center">
-                                14 <span class="text-xs">Libre</span>
-                            </button>
-                            <div class="max-sm:hidden"></div>
-                            <button type="button" data-seat="15" class="siege libre flex flex-col justify-center">
-                                15 <span class="text-xs">Libre</span>
-                            </button>
-                            <button type="button" data-seat="16" class="siege libre flex flex-col justify-center">
-                                16 <span class="text-xs">Libre</span>
-                            </button>
-                            <button type="button" data-seat="17" class="siege libre flex flex-col justify-center">
-                                17 <span class="text-xs">Libre</span>
-                            </button>
-                            <button type="button" data-seat="18" class="siege libre flex flex-col justify-center">
-                                18 <span class="text-xs">Libre</span>
+                            <button type="button" data-seat="10" class="siege libre flex flex-col gap-2 p-2 h-full justify-center">
+                                10 <span class="text-xs nomText">Libre</span> <span class="text-xs phoneText"></span>
                             </button>
                             <div class="max-sm:hidden"></div>
-                            <button type="button" data-seat="19" class="siege libre flex flex-col justify-center">
-                                19 <span class="text-xs">Libre</span>
+                            <button type="button" data-seat="11" class="siege libre flex flex-col gap-2 p-2 h-full justify-center">
+                                11 <span class="text-xs nomText">Libre</span> <span class="text-xs phoneText"></span>
                             </button>
-                            <button type="button" data-seat="20" class="siege libre flex flex-col justify-center">
-                                20 <span class="text-xs">Libre</span>
+                            <button type="button" data-seat="12" class="siege libre flex flex-col gap-2 p-2 h-full justify-center">
+                                12 <span class="text-xs nomText">Libre</span> <span class="text-xs phoneText"></span>
+                            </button>
+                            <button type="button" data-seat="13" class="siege libre flex flex-col gap-2 p-2 h-full justify-center">
+                                13 <span class="text-xs nomText">Libre</span> <span class="text-xs phoneText"></span>
+                            </button>
+                            <button type="button" data-seat="14" class="siege libre flex flex-col gap-2 p-2 h-full justify-center">
+                                14 <span class="text-xs nomText">Libre</span> <span class="text-xs phoneText"></span>
+                            </button>
+                            <div class="max-sm:hidden"></div>
+                            <button type="button" data-seat="15" class="siege libre flex flex-col gap-2 p-2 h-full justify-center">
+                                15 <span class="text-xs nomText">Libre</span> <span class="text-xs phoneText"></span>
+                            </button>
+                            <button type="button" data-seat="16" class="siege libre flex flex-col gap-2 p-2 h-full justify-center">
+                                16 <span class="text-xs nomText">Libre</span> <span class="text-xs phoneText"></span>
+                            </button>
+                            <button type="button" data-seat="17" class="siege libre flex flex-col gap-2 p-2 h-full justify-center">
+                                17 <span class="text-xs nomText">Libre</span> <span class="text-xs phoneText"></span>
+                            </button>
+                            <button type="button" data-seat="18" class="siege libre flex flex-col gap-2 p-2 h-full justify-center">
+                                18 <span class="text-xs nomText">Libre</span> <span class="text-xs phoneText"></span>
+                            </button>
+                            <div class="max-sm:hidden"></div>
+                            <button type="button" data-seat="19" class="siege libre flex flex-col gap-2 p-2 h-full justify-center">
+                                19 <span class="text-xs nomText">Libre</span> <span class="text-xs phoneText"></span>
+                            </button>
+                            <button type="button" data-seat="20" class="siege libre flex flex-col gap-2 p-2 h-full justify-center">
+                                20 <span class="text-xs nomText">Libre</span> <span class="text-xs phoneText"></span>
                             </button>
 
                         </div>
