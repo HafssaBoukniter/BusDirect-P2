@@ -17,11 +17,11 @@ const formRes = document.getElementById("form-reservation");
 const parReserver = document.querySelector("#message-reservation");
 const formModif = document.getElementById("form-modification");
 const formSupp = document.getElementById("form-suppression");
+const nouveauNom = document.querySelector("#nouveau-nom");
+const nouveauPhone = document.querySelector("#nouveau-phone");
+const parModif = document.querySelector("#message-modification");
+const parSupp = document.querySelector("#message-suppression");
 
-
-function getTrips(){
-    localStorage.getItem("trips") || [];
-}
 
 function sauvegarderTrips(){
     sauvegarder(trips);
@@ -29,6 +29,26 @@ function sauvegarderTrips(){
 
 const trips = await initialiser();
 
+function actualiserSiege(trip){
+    sieges.forEach(siege =>{
+        const nomPassager = siege.querySelector(".nomText");
+        const phoneSiege = siege.querySelector(".phoneText");
+        let result=trip.reservations.find(tt=>{
+            return Number(siege.dataset.seat) === Number(tt.seat)
+        });
+        if(result){
+            nomPassager.textContent = result.name;
+            phoneSiege.textContent =result.phone;
+            siege.classList.add("occupe");
+            siege.classList.remove("libre");
+        }else{
+            nomPassager.textContent = "Libre";
+            phoneSiege.textContent = "";
+            siege.classList.add("libre");
+            siege.classList.remove("occupe");
+        }
+    });
+}
 
 
 function reservationSelect(trip) {
@@ -73,8 +93,7 @@ function modifSuppPassSelect() {
 }
 
 async function afficherTout() {
-    getTrips();
-    console.log(trips)
+    console.table(trips);
 
     const trip = trips.find(trip => trip.id === id);
 
@@ -88,19 +107,7 @@ async function afficherTout() {
         return;
     }
 
-    sieges.forEach(siege =>{
-        const nomPassager = siege.querySelector(".nomText");
-        const phoneSiege = siege.querySelector(".phoneText");
-        let result=trip.reservations.find(tt=>{
-            return Number(siege.dataset.seat) === Number(tt.seat)
-        });
-        if(result){
-            nomPassager.textContent = result.name;
-            phoneSiege.textContent =result.phone;
-            siege.classList.add("occupe");
-            siege.classList.remove("libre");
-        }
-    });
+    actualiserSiege(trip);
 
     formRes.addEventListener("submit" ,e =>{
         e.preventDefault();
@@ -137,14 +144,77 @@ async function afficherTout() {
 
         sauvegarderTrips();
 
+        actualiserSiege(trip);
         reservationSelect(trip);
         modifSuppPassSelect();
         renderCabine(trip);
 
         formRes.reset();
     });
-    formModif.addEventListener("submit" ,e =>{e.preventDefault()});
-    formSupp.addEventListener("submit" ,e =>{e.preventDefault()});
+    formModif.addEventListener("submit" ,e =>{
+        e.preventDefault()
+        const passExist =passagerSelectModif.value;
+        const nouvPass = nouveauNom.value.trim();
+        const nouvPhone = nouveauPhone.value.trim();
+        const nouvSiege = updateSelect.value;
+
+
+        const reservation = trip.reservations.find(r =>
+            Number(r.seat) === Number(passExist)
+        );
+
+        if(!reservation){
+            afficherMessage(parModif,"Passager introuvable.");
+            return;
+        };
+
+        const p = {
+            name: nouvPass,
+            phone: nouvPhone,
+            seat: nouvSiege !== "" ? Number(nouvSiege) : ""
+        };
+
+        modifier(trip,passExist,p);
+
+        afficherMessage(parModif,"Modification confirmée.");
+
+        sauvegarderTrips();
+
+        actualiserSiege(trip);
+        renderCabine(trip);
+        reservationSelect(trip);
+        modifSuppPassSelect();
+
+        formModif.reset();
+    });
+    formSupp.addEventListener("submit" ,e =>{
+        e.preventDefault();
+
+        const passExist =passagerSupp.value;
+
+        if(!passExist){
+            afficherMessage(parSupp,"choisir un passager.");
+            return;
+        }
+
+        console.log("Passager sélectionné:", passagerSupp.value);
+        console.log("Réservations avant:", trip.reservations);
+
+        annuler(trip,passExist);
+
+        console.log("Réservations après:", trip.reservations);
+
+        afficherMessage(parSupp,"Suppression confirmée.");
+
+        sauvegarderTrips()
+
+        actualiserSiege(trip);
+        renderCabine(trip);
+        reservationSelect(trip);
+        modifSuppPassSelect();
+
+        formSupp.reset();
+    });
 
 
     reservationSelect(trip);
