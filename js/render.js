@@ -135,7 +135,66 @@ export function renderCabine(trip) {
 }
 
 export function renderListeAttente(trip) {
+    const listAtt = document.querySelector("#listattente");
+    if(estComplet(trip)){
+        listAtt.innerHTML = `
+            <div class="flex text-center justify-between">
+                <h2 class="text-lg font-bold text-amber-600 mb-4">
+                    <span class="inline-flex items-center justify-center bg-amber-500 text-white rounded-lg w-9 h-9 mr-2"><i class="fa-solid fa-user-clock" style="color: rgb(255, 255, 255);"></i></span>List d'attente
+                </h2>
 
+                <span class="bg-amber-100 text-amber-800 h-fit py-2 rounded-full px-3 text-sm font-semibold">
+                    <span id="nombre-attente">${trip.waitingList.length}</span> personne(s)
+                </span>
+            </div>
+            <form id="form-listattente">
+                <div class="mb-3">
+                    <label for="nom-attente" class="block text-sm font-medium mb-2">Nom du passager <span class="text-rose-500">*</span></label>
+                    <input type="text" id="nom-listattente" name="nom" placeholder="Ex : Hafssa"  class="w-full border border-slate-300 rounded-lg  px-3 py-2.5 outline-none  focus:border-teal-500">
+                    <p id="error-nom" class="text-sm mt-3"></p>
+                </div>
+                <div class="mb-3">
+                    <label for="tel-listattente" class="block text-sm font-medium mb-2">Téléphone <span class="text-rose-500">*</span></label>
+                        <input type="tel" id="tel-listattente" name="tel" placeholder="Ex : 06XXXXXXXX"  class="w-full border border-slate-300 rounded-lg  px-3 py-2.5 outline-none  focus:border-teal-500">
+                        <p id="error-nom" class="text-sm mt-3"></p>
+                </div>
+
+                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg py-3">Ajouter à list d'attente</button>
+
+                <p id="message-listattente" role="status" aria-live="polite" class="text-sm mt-3"></p>
+            </form>
+        `;
+    }else{
+        listAtt.innerHTML = `
+            <div class="opacity-50 flex text-center justify-between">
+                <h2 class="text-lg font-bold text-amber-600 mb-4">
+                    <span class="inline-flex items-center justify-center bg-amber-500 text-white rounded-lg w-9 h-9 mr-2"><i class="fa-solid fa-user-clock" style="color: rgb(255, 255, 255);"></i></span>List d'attente
+                </h2>
+
+                <span class="bg-amber-100 text-amber-800 h-fit py-2 rounded-full px-3 text-sm font-semibold">
+                    <span id="nombre-attente">${trip.waitingList.length}</span> personne(s)
+                </span>
+            </div>
+            <p class="w-full text-center text-sm mt-3 font-semibold rounded-lg p-3">Le formulaire d'inscription à la liste d'attente est désactivé.</p>
+        `;
+    }
+}
+
+export function listAttente(trip){
+    const listAttAff = document.querySelector("#listAttenteAff");
+    listAttAff.innerHTML = `
+         <h2 class="text-lg font-bold text-amber-600 mb-4">List d'attente</h2>
+        <div class="flex flex-col gap-3">
+            ${trip.waitingList.map((p,index) => `
+              <div class="waitPassager flex justify-between items-center p-3 bg-transparent rounded-lg border border-slate-300">
+                    <div>
+                        <p class="font-semibold text-gray-800">${index + 1}. ${p.name} - ${p.phone}</p>
+                    </div>
+                    <button  class="retirer bg-red-400 border border-red-500 hover:bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-lg" data-index="${index}">Retirer</button>
+                </div>
+            `).join("")}
+        </div>
+    `;
 }
 
 export function afficherMessage(el, texte) {

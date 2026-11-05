@@ -1,6 +1,6 @@
 import { initialiser, sauvegarder } from "./store.js";
-import { afficherMessage, renderCabine,renderListeAttente } from "./render.js";
-import { reserver,modifier,annuler,inscrireEnAttente,retirerDeAttente, estVIP, prixSiege } from "./reservation.js";
+import { afficherMessage, listAttente, renderCabine,renderListeAttente } from "./render.js";
+import { reserver,modifier,annuler,inscrireEnAttente,retirerDeAttente, estVIP, prixSiege, estComplet } from "./reservation.js";
 import { validerPassager } from "./validators.js";
 
 const id = Number(new URLSearchParams(location.search).get("id"));
@@ -21,6 +21,8 @@ const nouveauNom = document.querySelector("#nouveau-nom");
 const nouveauPhone = document.querySelector("#nouveau-phone");
 const parModif = document.querySelector("#message-modification");
 const parSupp = document.querySelector("#message-suppression");
+const listAttenteAff = document.querySelector("#listAttenteAff");
+const disabledForm = document.querySelector("#disabled");
 
 
 function sauvegarderTrips(){
@@ -50,6 +52,27 @@ function actualiserSiege(trip){
     });
 }
 
+function actualiserListAttente(trip){
+    const complet = estComplet(trip);
+    const hasWaiting = trip.waitingList.length > 0;
+
+    if(complet){
+        disabledForm.disabled = true;
+        disabledForm.style.opacity = 0.5;
+    }else{
+        disabledForm.disabled = false;
+        disabledForm.style.opacity = 1;
+    }
+
+    if(complet && hasWaiting){
+        listAttenteAff.classList.remove("hidden");
+    }else{
+        listAttenteAff.classList.add("hidden");
+    }
+
+    listAttente(trip);
+    renderListeAttente(trip);
+}
 
 function reservationSelect(trip) {
     selectReservation.innerHTML = '<option value="">Sélectionner un siège</option>';
@@ -92,6 +115,49 @@ function modifSuppPassSelect() {
     });
 }
 
+function dragItem(trip){
+    let drag;
+    sieges.forEach(siege =>{
+        siege.addEventListener("dragstart",e =>{
+            if(!siege.classList.contains("occupe")){
+                e.preventDefault();
+                return;
+            }
+
+            drag = siege;
+        });
+
+        siege.addEventListener("dragover",e =>{
+            e.preventDefault();
+        });
+
+        siege.addEventListener("drop",e =>{
+            e.preventDefault();
+            if(!drag || drag == siege ) return;
+            if(!siege.classList.contains('libre')) return;
+
+            const num = Number(drag.dataset.seat);
+            const nouvSg = Number(siege.dataset.seat);
+
+            const reservation = trip.reservations.find(r =>
+                Number(r.seat) === num
+            );
+
+            if(!reservation) return;
+
+            reservation.seat = nouvSg;
+
+            sauvegarderTrips();
+            actualiserSiege(trip);
+            reservationSelect(trip);
+            modifSuppPassSelect();
+            renderCabine(trip);
+
+            drag = null;
+        });
+    });
+}
+
 async function afficherTout() {
     console.table(trips);
 
@@ -108,6 +174,9 @@ async function afficherTout() {
     }
 
     actualiserSiege(trip);
+    actualiserListAttente(trip);
+
+    console.log(trip.waitingList)
 
     formRes.addEventListener("submit" ,e =>{
         e.preventDefault();
@@ -204,11 +273,28 @@ async function afficherTout() {
 
         console.log("Réservations après:", trip.reservations);
 
-        afficherMessage(parSupp,"Suppression confirmée.");
+
+
+        if(trip.waitingList.length > 0){
+            const passager = trip.waitingList[0];
+
+            const siegeLibre = Number(passExist);
+
+            const reslt = reserver(trip,passager,siegeLibre);
+
+            afficherMessage(parSupp,`${passager.name}  a obtenu le siège ${siegeLibre}`);
+            
+            if(reslt){
+                trip.waitingList.splice(0, 1);
+            }
+        }else{
+            afficherMessage(parSupp,"Suppression confirmée.");
+        }
 
         sauvegarderTrips()
 
         actualiserSiege(trip);
+        actualiserListAttente(trip);
         renderCabine(trip);
         reservationSelect(trip);
         modifSuppPassSelect();
@@ -216,10 +302,57 @@ async function afficherTout() {
         formSupp.reset();
     });
 
+    renderListeAttente(trip);
+
+    const passagerListAt = document.querySelector("#nom-listattente");
+    const phoneListAt = document.querySelector("#tel-listattente");
+    const formListAt = document.getElementById("form-listattente");
+    const parLA = document.querySelector("#message-listattente");
+
+   if(formListAt){
+        formListAt.addEventListener("submit", e =>{
+            e.preventDefault();
+
+            const p = {
+                name : passagerListAt.value.trim(),
+                phone : phoneListAt.value.trim()
+            };
+
+            if(!validerPassager(trip,p)){
+                return;
+            }
+
+            afficherMessage(parLA,"Vous avez ajouter dans la liste d'attente.");
+
+            inscrireEnAttente(trip,p);
+            sauvegarderTrips();
+            actualiserListAttente(trip);
+        });
+   }
+
+   listAttente(trip);
+
+   const container = document.querySelectorAll(".waitPassager");
+   if(container){
+        container.forEach(div=>{
+            div.addEventListener("click",e =>{
+                e.preventDefault();
+                const btn = e.target.closest(".retirer");
+                const index = Number(btn.dataset.index);
+                retirerDeAttente(trip,index);
+
+                sauvegarderTrips();
+                listAttente(trip);
+                actualiserListAttente(trip);
+            })   
+        })
+    }
+   
 
     reservationSelect(trip);
     modifSuppPassSelect();
     renderCabine(trip);
+    dragItem(trip);
 }
 
 afficherTout();
