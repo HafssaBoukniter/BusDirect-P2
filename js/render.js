@@ -1,10 +1,10 @@
-import { estComplet,placesLibres,recetteTrajet } from "./reservation.js";
+import { estComplet, placesLibres, recetteTrajet } from "./reservation.js";
 
-export function renderTrajets(trips){
+export function renderTrajets(trips) {
     const listT = document.querySelector("#list-trajet");
 
-    listT.innerHTML = trips.map(trip =>{
-        const  {id, departure, destination, departureTime, arrivalTime, price, reservations, waitingList} = trip;
+    listT.innerHTML = trips.map(trip => {
+        const { id, departure, destination, departureTime, arrivalTime, price, reservations, waitingList } = trip;
         const Complet = estComplet(trip);
         const placesLibre = placesLibres(trip);
 
@@ -70,54 +70,54 @@ export function renderTrajets(trips){
     }).join("");
 
 
-    const totalPassager = trips.reduce((total,trip) => {
+    const totalPassager = trips.reduce((total, trip) => {
         return total + trip.reservations.length;
-    },0);
+    }, 0);
 
     const nombrePassager = document.getElementById("nombre-passager");
 
     nombrePassager.textContent = totalPassager;
 
-    const totalPrix = trips.reduce((total,trip) => {
+    const totalPrix = trips.reduce((total, trip) => {
         return total + (trip.price * trip.reservations.length);
-    },0);
+    }, 0);
 
     const recetteTotal = document.getElementById("recette-total");
 
     recetteTotal.textContent = totalPrix
 }
 
-export function renderPagination(page, total){
+export function renderPagination(page, total) {
     const pagination = document.getElementById("pagination");
 
-    if(!pagination) return;
+    if (!pagination) return;
 
     let pages = "";
 
-    if(page > 1){
-        pages =` 
+    if (page > 1) {
+        pages = ` 
             <button type="button" id="precedent" data-page="${page - 1}" ${page <= 1 ? "disabled" : ""}
                 class="px-4 py-2 rounded-lg bg-teal-200 text-white hover:bg-teal-300"><</button>
         `;
     }
-    
 
-    for(let i =1; i <= total;i++){
-        pages+= `<button id="${i}" data-page="${i}" ${page === i ? "disabled" : ""} type="button" class="px-4 py-2 rounded-lg ${page === i ? "bg-teal-400" :"bg-teal-200"} hover:bg-teal-300 text-white">${i}</button>`;
+
+    for (let i = 1; i <= total; i++) {
+        pages += `<button id="${i}" data-page="${i}" ${page === i ? "disabled" : ""} type="button" class="px-4 py-2 rounded-lg ${page === i ? "bg-teal-400" : "bg-teal-200"} hover:bg-teal-300 text-white">${i}</button>`;
     }
 
-    if(page < total){
+    if (page < total) {
         pages += `
             <button type="button" id="suivant" data-page="${page + 1}" ${page >= total ? "disabled" : ""}
                 class="px-4 py-2 rounded-lg bg-teal-200 text-white hover:bg-teal-300">></button>
         `;
     }
-    
+
 
     pagination.innerHTML = pages;
 }
 
-export function renderCabine(trip){
+export function renderCabine(trip) {
     document.getElementById("trajet-titre").textContent = `${trip.departure} → ${trip.destination}`;
 
     document.getElementById("heure-depart").textContent = `${trip.departureTime}`;
@@ -134,10 +134,10 @@ export function renderCabine(trip){
     document.getElementById("totale").textContent = recetteTrajet(trip);
 }
 
-export function renderListeAttente(trip){
+export function renderListeAttente(trip) {
 
 }
 
-export function afficherMessage(el, texte){
+export function afficherMessage(el, texte) {
 
 }
