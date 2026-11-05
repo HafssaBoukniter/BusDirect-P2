@@ -139,5 +139,9 @@ export function renderListeAttente(trip) {
 }
 
 export function afficherMessage(el, texte) {
-
+    el.textContent = `${texte}`;
+        setTimeout(() => {
+            el.textContent = "";
+        }, 3000);
+    return;
 }

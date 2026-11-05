@@ -25,6 +25,14 @@ export function recetteTrajet(trip){
 
 export function reserver(trip, p, siege){
 
+    const nouvelleRes ={
+        seat : siege,
+        name : p.name,
+        phone : p.phone
+    };
+    
+    trip.reservations = [...trip.reservations,nouvelleRes];
+    return true;
 }
 
 export function modifier(trip, siege, p){

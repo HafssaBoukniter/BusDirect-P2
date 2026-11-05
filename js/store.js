@@ -1,6 +1,6 @@
 export async function initialiser() {
     try{
-        const data =localStorage.getItem("trip");
+        const data =localStorage.getItem("trips");
         
         if(data !== null){
             return JSON.parse(data);
@@ -24,5 +24,5 @@ export async function initialiser() {
 }
 
 export function sauvegarder(trip){
-    localStorage.setItem("trip",JSON.stringify(trip));
+    localStorage.setItem("trips",JSON.stringify(trip));
 }
