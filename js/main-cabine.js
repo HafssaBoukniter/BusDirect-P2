@@ -53,25 +53,26 @@ function actualiserSiege(trip){
 }
 
 function actualiserListAttente(trip){
-    if(estComplet(trip)){
-        listAttenteAff.classList.remove("hidden");
+    const complet = estComplet(trip);
+    const hasWaiting = trip.waitingList.length > 0;
+
+    if(complet){
         disabledForm.disabled = true;
         disabledForm.style.opacity = 0.5;
     }else{
-        listAttenteAff.classList.add("hidden");
+        disabledForm.disabled = false;
         disabledForm.style.opacity = 1;
     }
 
-    if(estComplet(trip) && trip.waitingList.length == 0){
-        listAttenteAff.classList.add("hidden");
-    }else{
+    if(complet && hasWaiting){
         listAttenteAff.classList.remove("hidden");
+    }else{
+        listAttenteAff.classList.add("hidden");
     }
 
     listAttente(trip);
     renderListeAttente(trip);
 }
-
 
 function reservationSelect(trip) {
     selectReservation.innerHTML = '<option value="">Sélectionner un siège</option>';
@@ -111,6 +112,49 @@ function modifSuppPassSelect() {
                 passagerSupp.appendChild(option1.cloneNode(true));
             }
         }
+    });
+}
+
+function dragItem(trip){
+    let drag;
+    sieges.forEach(siege =>{
+        siege.addEventListener("dragstart",e =>{
+            if(!siege.classList.contains("occupe")){
+                e.preventDefault();
+                return;
+            }
+
+            drag = siege;
+        });
+
+        siege.addEventListener("dragover",e =>{
+            e.preventDefault();
+        });
+
+        siege.addEventListener("drop",e =>{
+            e.preventDefault();
+            if(!drag || drag == siege ) return;
+            if(!siege.classList.contains('libre')) return;
+
+            const num = Number(drag.dataset.seat);
+            const nouvSg = Number(siege.dataset.seat);
+
+            const reservation = trip.reservations.find(r =>
+                Number(r.seat) === num
+            );
+
+            if(!reservation) return;
+
+            reservation.seat = nouvSg;
+
+            sauvegarderTrips();
+            actualiserSiege(trip);
+            reservationSelect(trip);
+            modifSuppPassSelect();
+            renderCabine(trip);
+
+            drag = null;
+        });
     });
 }
 
@@ -308,6 +352,7 @@ async function afficherTout() {
     reservationSelect(trip);
     modifSuppPassSelect();
     renderCabine(trip);
+    dragItem(trip);
 }
 
 afficherTout();
